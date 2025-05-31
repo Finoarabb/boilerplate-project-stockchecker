@@ -58,7 +58,7 @@ module.exports = function (app) {
     else {
       const stockData = await getStockInfo(stock);
         stockData.likes = await likeHandler(stock, ip,like);
-      return res.json({stockData:{stockData}});
+      return res.json({stockData});
     }
   })
 };
