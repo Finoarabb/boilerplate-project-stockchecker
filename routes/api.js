@@ -53,12 +53,12 @@ module.exports = function (app) {
       }
       data[0].rel_likes = likes[0] - likes[1];
       data[1].rel_likes = likes[1] - likes[0];
-      return res.send(data);
+      return res.json({stockData:data});
     }
     else {
       const stockData = await getStockInfo(stock);
         stockData.likes = await likeHandler(stock, ip,like);
-      return res.json(stockData);
+      return res.json({stockData:{stockData}});
     }
   })
 };

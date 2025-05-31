@@ -22,11 +22,15 @@ app.use(cors({origin: '*'})); //For FCC testing purposes only
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(helmet({directives:{
-  defaultSrc:["'self'"],
-  scriptSrc:["'self'", "'unsafe-inline'"],
-  styleSrc:["'self'", "'unsafe-inline'"],
-} }))
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"],
+    },
+  })
+);
 //Index page (static HTML)
 app.route('/')
   .get(function (req, res) {

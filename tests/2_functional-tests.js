@@ -28,7 +28,7 @@ suite('Functional Tests', function() {
                 .query({stock, like})
                 .end(function(err, res) {
                     assert.equal(res.status, 200);
-                    assert.deepEqual(res.body, expected);
+                    assert.deepEqual(res.body.stockData, expected);
                     done();
                 });
         });
