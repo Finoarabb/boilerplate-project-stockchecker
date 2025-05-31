@@ -3,11 +3,17 @@ require('dotenv').config();
 const express     = require('express');
 const bodyParser  = require('body-parser');
 const cors        = require('cors');
-
 const apiRoutes         = require('./routes/api.js');
 const fccTestingRoutes  = require('./routes/fcctesting.js');
 const runner            = require('./test-runner');
-
+const helmet = require('helmet');
+const mongoose =require('mongoose');
+mongoose.connect(process.env.MONGO_URI, {
+}).then(() => {
+  console.log('Connected to MongoDB');
+}).catch(err => {
+  console.error('MongoDB connection error:', err);
+});
 const app = express();
 
 app.use('/public', express.static(process.cwd() + '/public'));
@@ -16,7 +22,11 @@ app.use(cors({origin: '*'})); //For FCC testing purposes only
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(helmet({directives:{
+  defaultSrc:["'self'"],
+  scriptSrc:["'self'", "'unsafe-inline'"],
+  styleSrc:["'self'", "'unsafe-inline'"],
+} }))
 //Index page (static HTML)
 app.route('/')
   .get(function (req, res) {
